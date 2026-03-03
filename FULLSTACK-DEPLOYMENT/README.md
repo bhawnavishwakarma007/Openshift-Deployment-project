@@ -15,7 +15,7 @@ Run the commands one by one
 oc apply -f build.yaml
 ```
 ```
-oc start-build flask-build --follow
+oc start-build nodejs-build --follow
 ```
 
 ```
