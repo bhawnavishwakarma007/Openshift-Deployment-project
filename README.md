@@ -1,224 +1,321 @@
-# 🚀 Red Hat OpenShift Developer Sandbox Setup Guide
+# 🚀 Red Hat OpenShift Developer Sandbox – Complete Setup Guide
 
-Complete step-by-step guide:  
-From **Red Hat account creation → OpenShift Sandbox → Dev Spaces Workspace → VS Code connection**
+End-to-end guide to set up:
+
+- ✅ Red Hat Developer Account  
+- ✅ OpenShift Developer Sandbox  
+- ✅ Dev Spaces (Cloud IDE)  
+- ✅ Project (Namespace)  
+- ✅ OpenShift CLI (`oc`)  
+- ✅ VS Code Integration  
+- ✅ Deploying a Sample Application  
 
 ---
 
-## 📌 Prerequisites
+# 📌 Overview
 
-- ✅ Internet connection  
-- ✅ VS Code installed  
-- ✅ Git installed (optional but recommended)  
-- ✅ Basic terminal knowledge  
+This guide walks you through building a complete cloud-native development workflow using **OpenShift Developer Sandbox**.
+
+By the end, you will have:
+
+- 🌐 Running OpenShift cluster  
+- 💻 Dev Spaces cloud IDE  
+- 🗂 A Project (Kubernetes Namespace)  
+- ⚙️ CLI access via `oc`  
+- 🖥 VS Code connected to cluster  
+- 🚀 Deployed application with public route  
 
 ---
 
 # 🟢 Step 1: Create a Red Hat Developer Account
 
-Go to:  
-👉 https://developers.redhat.com/
+1. Go to: https://developers.redhat.com  
+2. Click **Log In**  
+3. Select **Register for a Red Hat account**  
+4. Fill required details  
+5. Verify your email  
 
-1. Click **Log In**
-2. Select **Register for a Red Hat account**
-3. Fill in:
-   - First name  
-   - Last name  
-   - Email  
-   - Password  
-   - Country  
-4. Verify your email  
-
-✅ Your Red Hat account is ready.
+✅ Account created.
 
 ---
 
 # 🟢 Step 2: Start OpenShift Developer Sandbox
 
-Go to:  
-👉 https://developers.redhat.com/developer-sandbox
+## Option A – Direct Link
 
-1. Click **Start your trial**
-2. Log in with your Red Hat account
-3. Accept terms & conditions
-4. Wait for provisioning (1–5 minutes)
+1. Go to: https://developers.redhat.com/developer-sandbox  
+2. Click **Start your trial**  
+3. Log in  
+4. Accept terms  
+5. Wait for provisioning (1–5 minutes)
 
-You will be redirected to:  
-👉 https://sandbox.redhat.com
+You will be redirected to:
 
----
-
-# 🟢 Step 3: Access OpenShift from Sandbox Dashboard
-
-Inside the Developer Sandbox dashboard you will see:
-
-- OpenShift  
-- OpenShift AI  
-- Dev Spaces  
-
-Click:  
-👉 **OpenShift → Try it**
-
-This opens the **OpenShift Web Console**.
+https://sandbox.redhat.com
 
 ---
 
-# 🟢 Step 4: Create a Dev Spaces Workspace
+## Option B – From RedHat.com (Product Navigation)
 
-Dev Spaces allows you to code in the browser using a cloud IDE.
+1. Go to: https://www.redhat.com  
+2. Click **Products**  
+3. Select **Red Hat OpenShift**  
+4. Click **Try it**  
+5. Choose **Developer Sandbox**  
+6. Click **Start your trial**
 
 ---
+
+# ⚠ Developer Sandbox Limitations
+
+- 30-day trial  
+- Limited CPU & RAM  
+- Limited persistent storage  
+- No cluster-admin privileges  
+- Cannot install cluster-wide operators  
+
+---
+
+# 🟢 Step 3: Access OpenShift Web Console
+
+From Sandbox dashboard:
+
+1. Click **OpenShift**  
+2. Click **Try it**
+
+You are now inside the OpenShift Web Console.
+
+---
+
+# 🟢 Step 4: Create a Dev Spaces Workspace (Cloud IDE)
+
+Dev Spaces allows you to code directly inside the browser.
 
 ## 🔹 4.1 Open Dev Spaces
 
 From Sandbox dashboard:
 
-👉 Click **Dev Spaces → Try it**
-
-You will be redirected to:
-
-    https://devspaces.apps.<cluster>.openshiftapps.com
+Click **Dev Spaces → Try it**
 
 ---
 
-## 🔹 4.2 Login to Dev Spaces
+## 🔹 4.2 Login
 
-1. Click **Log in with OpenShift**
-2. Authorize access  
+Click:
 
-You will see the **Create Workspace** page.
+```
+Log in with OpenShift
+```
 
----
-
-## 🔹 4.3 Create a Workspace (Method 1: Import from Git)
-
-Under **Import from Git**:
-
-1. Paste a Git repository URL  
-
-   Example:
-
-       https://github.com/sclorg/nodejs-ex.git
-
-2. Click **Create & Open**
-3. ⏳ Wait for workspace to start
+Authorize access.
 
 ---
 
-## 🔹 4.4 Create Workspace (Method 2: Sample Workspace)
+## 🔹 4.3 Create Workspace (Import from Git)
+
+Under **Import from Git**, example:
+
+```
+https://github.com/sclorg/nodejs-ex.git
+```
+
+Click **Create & Open**  
+Wait for workspace to start.
+
+---
+
+## 🔹 4.4 Create Workspace (Sample Template)
 
 1. Scroll to **Select a Sample**
-2. Choose a sample (Node.js, Java, etc.)
+2. Choose stack (Node.js, Java, etc.)
 3. (Optional) Enter workspace name
 4. Click **Create & Open**
 
 ---
 
-## 🔹 4.5 Workspace Environment
+## 🛑 Delete Workspace (Important)
 
-Once created, your workspace includes:
+To free sandbox resources:
 
-- VS Code-like editor  
-- Integrated terminal  
-- File explorer  
-- OpenShift tools  
-- Kubernetes support  
+From Dev Spaces dashboard:
+- Click 3 dots next to workspace
+- Click **Delete**
 
-You are now coding inside OpenShift ☁️
+Or:
 
----
-
-# 🟢 Step 5: Install OpenShift CLI (oc)
+```bash
+oc delete workspace <workspace-name>
+```
 
 ---
 
-## 🔹 5.1 Download CLI
+# 🟢 Step 5: Create a Project (Namespace)
 
-In OpenShift Web Console:
-
-1. Click your username (top right)
-2. Click **Command Line Tools**
-3. Download OpenShift CLI for your OS  
-
-Or directly:
-
-👉 https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/
+> In OpenShift, **Project = Kubernetes Namespace**  
+> All pods, deployments, services, and routes live inside a project.
 
 ---
 
-## 🔹 5.2 Install CLI
+## 🔹 Method 1 – From Web Console (Recommended)
 
-### Windows
+1. Switch to **Developer** view  
+2. Click **Project dropdown (top left)**  
+3. Click **Create Project**  
+4. Enter:
 
-1. Extract ZIP  
-2. Move `oc.exe` to:
+   - Name: `my-dev-project`
 
-       C:\Windows\System32
+5. Click **Create**
 
-   OR add to PATH
-
-### macOS / Linux
-
-    tar -xvf openshift-client.tar.gz
-    sudo mv oc /usr/local/bin/
+Your project is now active.
 
 ---
 
-## 🔹 5.3 Verify Installation
+## 🔹 Method 2 – Using CLI
 
-    oc version
+```bash
+oc new-project my-dev-project
+```
+
+Verify:
+
+```bash
+oc project
+```
+
+Switch project:
+
+```bash
+oc project my-dev-project
+```
 
 ---
 
-# 🟢 Step 6: Login to OpenShift via CLI
+# 🟢 Step 6: Install OpenShift CLI (oc)
+
+## 🔹 6.1 Download
 
 In Web Console:
 
-1. Click your username  
-2. Click **Copy login command**
-3. Click **Display token**
+1. Click username (top right)  
+2. Click **Command Line Tools**  
+3. Download CLI  
+
+Or:
+
+https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/
+
+---
+
+## 🔹 6.2 Install
+
+### Windows
+
+Extract ZIP and move:
+
+```
+oc.exe → C:\Windows\System32
+```
+
+Or add to PATH.
+
+### macOS / Linux
+
+```bash
+tar -xvf openshift-client.tar.gz
+sudo mv oc /usr/local/bin/
+```
+
+---
+
+## 🔹 6.3 Verify Installation
+
+```bash
+oc version
+```
+
+---
+
+# 🟢 Step 7: Login to OpenShift via CLI
+
+In Web Console:
+
+1. Click username  
+2. Click **Copy login command**  
+3. Click **Display Token**  
 4. Copy the `oc login` command  
 
 Example:
 
-    oc login --token=sha256~XXXXX --server=https://api.sandbox.xxxx.openshiftapps.com:6443
+```bash
+oc login --token=sha256~XXXXX --server=https://api.sandbox.xxx.openshiftapps.com:6443
+```
 
 Verify:
 
-    oc whoami
+```bash
+oc whoami
+```
 
 ---
 
-# 🟢 Step 7: Connect OpenShift to VS Code
+# 🟢 Step 8: Deploy a Sample Application
+
+Deploy Node.js sample:
+
+```bash
+oc new-app nodejs:18~https://github.com/sclorg/nodejs-ex.git
+```
+
+Expose service:
+
+```bash
+oc expose svc/nodejs-ex
+```
+
+Get route:
+
+```bash
+oc get route
+```
+
+Open the route URL in your browser 🚀
 
 ---
 
-## 🔹 7.1 Install VS Code Extensions
+# 🟢 Step 9: Connect OpenShift to VS Code
 
-Open VS Code → Extensions → Install:
+## 🔹 9.1 Install Extensions
 
-- ✅ OpenShift Connector  
-- ✅ Kubernetes  
-- ✅ Red Hat YAML  
+In VS Code install:
 
----
-
-## 🔹 7.2 Login to Cluster from VS Code
-
-1. Press:
-
-       Ctrl + Shift + P
-
-2. Search: `OpenShift: Login`
-3. Select your cluster (if already logged in using oc)  
-
-   OR paste server URL + token manually
+- OpenShift Connector  
+- Kubernetes  
+- Red Hat YAML  
 
 ---
 
-## 🔹 7.3 Verify Connection
+## 🔹 9.2 Login From VS Code
 
-Open **OpenShift Explorer** in VS Code.
+Press:
+
+```
+Ctrl + Shift + P
+```
+
+Search:
+
+```
+OpenShift: Login
+```
+
+Select cluster or paste server URL + token.
+
+---
+
+## 🔹 9.3 Verify Connection
+
+Open **OpenShift Explorer** panel.
 
 You should see:
 
@@ -230,74 +327,45 @@ You should see:
 
 ---
 
-# 🟢 Step 8: Create a New Project
+# 🟢 Useful Debug Commands
 
-    oc new-project my-dev-project
-
-Check:
-
-    oc projects
-
----
-
-# 🟢 Step 9: Deploy Sample Application
-
-    oc new-app nodejs:18~https://github.com/sclorg/nodejs-ex.git
-
-Expose service:
-
-    oc expose svc/nodejs-ex
-
-Get route:
-
-    oc get route
-
-Open the route URL in your browser 🚀
+```bash
+oc get pods
+oc logs <pod-name>
+oc describe pod <pod-name>
+oc get svc
+oc get route
+```
 
 ---
 
 # 🟢 Alternative: Use Dev Spaces Terminal Instead of Local CLI
 
-Inside your Dev Space:
+Inside Dev Space:
 
-1. Click **Terminal → New Terminal**
-2. Run:
+```
+Terminal → New Terminal
+```
 
-       oc get pods
+Run:
 
-No local installation needed.
+```bash
+oc get pods
+```
 
----
-
-# 🛠 Troubleshooting
-
-**oc not recognized**
-
-- Add `oc` to system PATH.
-
-**Workspace stuck loading**
-
-- Delete workspace and recreate.
-
-**Token expired**
-
-- Re-run `oc login` command.
-
-**VS Code not detecting cluster**
-
-- Restart VS Code.
+No local installation required.
 
 ---
 
-# 🎯 What You Have Successfully Done
+# 🎯 What You Achieved
 
 ✔ Created Red Hat account  
-✔ Activated OpenShift Developer Sandbox  
-✔ Accessed OpenShift Web Console  
-✔ Created Dev Spaces Workspace  
-✔ Installed oc CLI  
-✔ Connected cluster to VS Code  
-✔ Deployed application  
+✔ Activated Developer Sandbox  
+✔ Created Dev Spaces workspace  
+✔ Created Project (Namespace)  
+✔ Installed and configured oc CLI  
+✔ Connected VS Code to cluster  
+✔ Deployed and exposed application  
 
 ---
 
@@ -305,10 +373,22 @@ No local installation needed.
 
 You now have a complete cloud-native development workflow:
 
-- 🌐 OpenShift Cluster  
-- 💻 Dev Spaces (Cloud IDE)  
-- 🖥 Local VS Code Integration  
-- ⚙️ CLI Access  
-- 🚀 Application Deployment  
+- OpenShift Cluster  
+- Dev Spaces Cloud IDE  
+- CLI Access  
+- VS Code Integration  
+- Public Application Deployment  
 
-Happy Building! 🚀
+---
+
+# 📌 Recommended Next Steps
+
+- Deploy your own container images  
+- Create ConfigMaps and Secrets  
+- Explore OpenShift Routes  
+- Practice Helm deployments  
+- Learn OpenShift Pipelines (CI/CD)  
+
+---
+
+Happy Building 🚀
